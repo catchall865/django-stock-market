@@ -1,0 +1,22 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<h1>Hello world!</h1>
+<br>
+<br> 
+{% if api %}
+    {% if api == 'Error' %}
+    <p>There was a problem with your ticker symbol, please try again.</p>
+        
+    {% else %}
+    {{api.data.symbol}}<br>
+    {{api.data.name}}<br>
+    
+    {% for i in api.data.eod %}
+         Date:{{ i.date }}<br>
+         Open{{ i.open }}<br>
+         Close: {{ i.close }}<br><br>
+     {% endfor %}
+     {% endif %}
+ {% endif %} 
+{% endblock %}
