@@ -1,0 +1,49 @@
+{% extends 'base.html' %} {% block content %}
+<br />
+<h1>Add a stock to your portfolio</h1>
+
+
+<form
+  action="{% url 'add_stock' %}"
+  class="form"
+  role="search"
+  method="POST"
+>
+  {% csrf_token %}
+  <input
+    class="form-check-inline"
+    type="search"
+    placeholder="Add stock by ticker symbol"
+    aria-label="Search"
+    name="ticker"
+  />
+  <button class="btn btn-outline-info btn-sm" type="submit">Add</button>
+</form>
+<br />
+
+<table class="table table-borderless table-striped table-hover">
+  <thead class="thead-dark">
+    <tr>
+      <th scope="col">Company Symbol</th>
+      <th scope="col">Company Name</th>
+      <th scope="col">Exchange</th>
+      <th scope="col">Open</th>
+      <th scope="col">Close</th>
+      <th scope="col">High</th>
+    </tr>
+  </thead>
+  <tbody>
+    {% for item in output %}
+    <tr>
+      <td>{{ item.data.symbol }}</td>
+      <td>{{ item.data.name }}</td>
+      <td>{{ item.data.eod.0.exchange }}</td>
+      <td>${{ item.data.eod.0.open }}</td>
+      <td>${{ item.data.eod.0.close }}</td>
+      <td>${{ item.data.eod.0.high }}</td>
+    </tr>
+    {% endfor %}
+  </tbody>
+</table>
+
+{% endblock %}
